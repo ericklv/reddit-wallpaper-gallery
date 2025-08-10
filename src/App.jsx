@@ -75,6 +75,7 @@ function AppContent() {
       .map((c) => ({
         id: c.data.id,
         title: c.data.title,
+        permalink: c.data.permalink,
         thumbnail:
           c.data.preview?.images?.[0]?.resolutions?.[2]?.url?.replace(
             /&amp;/g,
@@ -240,7 +241,7 @@ function AppContent() {
         <Box
           ref={gridRef}
           display="grid"
-          gridTemplateColumns="repeat(auto-fill, minmax(150px, 1fr))"
+          gridTemplateColumns="repeat(auto-fill, minmax(145px, 1fr))"
           gap={4}
           p={4}
         >
@@ -264,8 +265,8 @@ function AppContent() {
               <Box
                 overflow="hidden"
                 borderRadius="md"
-                width="120px"
-                height="120px"
+                width="140px"
+                height="140px"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -273,7 +274,7 @@ function AppContent() {
                 <Image
                   src={w.thumbnail}
                   alt={w.title}
-                  boxSize="120px"
+                  boxSize="125px"
                   objectFit="cover"
                   borderRadius="none"
                   mb={2}
@@ -281,7 +282,7 @@ function AppContent() {
               </Box>
               <Text
                 mt={2}
-                fontSize="2xs"
+                fontSize="xs"
                 noOfLines={2}
                 textAlign="center"
                 w="full"
@@ -329,7 +330,18 @@ function AppContent() {
               mb={4}
               borderRadius="none"
             />
-            <Text fontSize="sm" mb={2} textAlign="center">
+            <Text
+              as="a"
+              href={`https://www.reddit.com${modalImage.permalink}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              fontSize="sm"
+              mb={2}
+              textAlign="center"
+              color={color}
+              textDecoration="underline"
+              _hover={{ color: "teal.400" }}
+            >
               {modalImage.title}
             </Text>
             <Box
@@ -356,7 +368,7 @@ function AppContent() {
                 onClick={() => setModalImage(null)}
                 border="2px solid"
                 bg="red.500"
-                color="white"
+                color={color}
                 borderColor={color}
                 _hover={{ bg: "red.600" }}
               >
