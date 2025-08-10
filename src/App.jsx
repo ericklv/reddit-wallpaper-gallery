@@ -11,6 +11,7 @@ import {
   Text,
   useColorMode,
   extendTheme,
+  Fade,
 } from "@chakra-ui/react";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { useColorModeValue } from "@chakra-ui/react";
@@ -136,7 +137,6 @@ function AppContent() {
         gap={4}
         bg={bg}
         color={color}
-        transition="background 0.3s, color 0.3s"
       >
         <Heading size="lg" textAlign="center">
           Reddit Wallpapers Gallery
@@ -252,16 +252,29 @@ function AppContent() {
               onClick={() => setModalImage(w)}
               bg={bg}
               color={color}
-              transition="background 0.3s, color 0.3s"
+              transition="transform 0.3s"
+              _hover={{
+                transform: "scale(1.2)",
+              }}
             >
-              <Image
-                src={w.thumbnail}
-                alt={w.title}
-                boxSize="120px"
-                objectFit="cover"
+              <Box
+                overflow="hidden"
                 borderRadius="md"
-                mb={2}
-              />
+                width="120px"
+                height="120px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Image
+                  src={w.thumbnail}
+                  alt={w.title}
+                  boxSize="120px"
+                  objectFit="cover"
+                  borderRadius="none"
+                  mb={2}
+                />
+              </Box>
               <Text
                 mt={2}
                 fontSize="xs"
@@ -288,6 +301,7 @@ function AppContent() {
           justifyContent="center"
           zIndex={10000}
           onClick={() => setModalImage(null)}
+          as="div"
         >
           <Box
             p={4}
@@ -309,7 +323,7 @@ function AppContent() {
               maxH="80vh"
               maxW="80vw"
               mb={4}
-              borderRadius="md"
+              borderRadius="none"
             />
             <Text fontSize="sm" mb={2} textAlign="center">
               {modalImage.title}
