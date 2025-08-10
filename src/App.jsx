@@ -139,8 +139,76 @@ function AppContent() {
         bg={bg}
         color={color}
       >
-        <Heading size="lg" textAlign="center">
-          Reddit Wallpapers Gallery
+        <Heading
+          size="lg"
+          textAlign="center"
+          sx={{
+            position: "relative",
+            display: "inline-block",
+            fontWeight: "bold",
+            mb: 2,
+            mt: 2,
+            color: color,
+            overflow: "visible",
+            fontFamily: "'Press Start 2P'",
+            fontSize: ["1.5rem", "2rem", "2.4rem"], // tamaño intermedio glitch title
+            lineHeight: 1.1,
+          }}
+          className="glitch"
+        >
+          <span
+            className="glitch-text"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              color: "#e60073",
+              opacity: 0.8,
+              transform: "translate(2px, 2px)",
+              zIndex: 1,
+              clipPath: "inset(0 0 50% 0)",
+            }}
+          >
+            Reddit Wallpapers Gallery
+          </span>
+          <span
+            className="glitch-text"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              color: "#00fff9",
+              opacity: 0.8,
+              transform: "translate(-2px, -1px)",
+              zIndex: 1,
+              clipPath: "inset(50% 0 0 0)",
+            }}
+          >
+            Reddit Wallpapers Gallery
+          </span>
+          <span
+            style={{
+              position: "relative",
+              zIndex: 2,
+              animation: "glitch-main 1.2s infinite linear alternate-reverse",
+            }}
+          >
+            Reddit Wallpapers Gallery
+          </span>
+          <style>
+            {`
+              @keyframes glitch-main {
+                0% { text-shadow: 2px 0 #e60073, -2px 0 #00fff9; }
+                20% { text-shadow: 2px 2px #e60073, -2px -2px #00fff9; }
+                40% { text-shadow: -2px 2px #e60073, 2px -2px #00fff9; }
+                60% { text-shadow: 2px -2px #e60073, -2px 2px #00fff9; }
+                80% { text-shadow: -2px -2px #e60073, 2px 2px #00fff9; }
+                100% { text-shadow: 2px 0 #e60073, -2px 0 #00fff9; }
+              }
+            `}
+          </style>
         </Heading>
         <Box
           display="flex"
@@ -282,7 +350,7 @@ function AppContent() {
               </Box>
               <Text
                 mt={2}
-                fontSize="xs"
+                fontSize="2xs"
                 noOfLines={2}
                 textAlign="center"
                 w="full"
