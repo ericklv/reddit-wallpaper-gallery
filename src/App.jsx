@@ -49,20 +49,28 @@ function AppContent() {
   const [after, setAfter] = useState(null);
   const [modalImage, setModalImage] = useState(null);
   const [subreddit, setSubreddit] = useState("wallpapers");
+  const [filter, setFilter] = useState("hot");
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
     setWallpapers([]);
     setAfter(null);
     fetchWallpapers(true);
-  }, [subreddit]);
+  }, [subreddit, filter, search]);
 
   const fetchWallpapers = async (reset = false) => {
-    const res = await fetch(
-      `https://www.reddit.com/r/${subreddit}.json?after=${reset ? "" : after || ""}`,
-    );
+    let url = "";
+    if (search) {
+      url = `https://www.reddit.com/r/${subreddit}/search.json?q=${encodeURIComponent(search)}&restrict_sr=1&sort=${filter}&after=${reset ? "" : after || ""}`;
+    } else {
+      url = `https://www.reddit.com/r/${subreddit}/${filter}.json?after=${reset ? "" : after || ""}`;
+    }
+    const res = await fetch(url);
     const data = await res.json();
-    const newWallpapers = data.data.children
+    const children = data.data?.children || [];
+    const newWallpapers = children
       .map((c) => ({
         id: c.data.id,
         title: c.data.title,
@@ -133,22 +141,74 @@ function AppContent() {
         <Heading size="lg" textAlign="center">
           Reddit Wallpapers Gallery
         </Heading>
-        <Select
-          fontSize="xs"
-          value={subreddit}
-          onChange={(e) => setSubreddit(e.target.value)}
-          width="auto"
-          border="2px solid"
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          gap={2}
+          alignItems="center"
+          justifyContent="center"
         >
-          {SUBREDDITS.map((subreddit) => (
-            <option key={subreddit} value={subreddit}>
-              {"r/" + subreddit}
-            </option>
-          ))}
-        </Select>
-        <Button onClick={toggleColorMode}>
-          {colorMode === "light" ? <FaMoon /> : <FaSun />}
-        </Button>
+          <Select
+            fontSize="xs"
+            value={subreddit}
+            onChange={(e) => setSubreddit(e.target.value)}
+            width="auto"
+            border="2px solid"
+          >
+            {SUBREDDITS.map((subreddit) => (
+              <option key={subreddit} value={subreddit}>
+                {"r/" + subreddit}
+              </option>
+            ))}
+          </Select>
+          <Select
+            fontSize="xs"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            width="auto"
+            border="2px solid"
+          >
+            <option value="hot">Hot</option>
+            <option value="new">New</option>
+            <option value="top">Top</option>
+            <option value="rising">Rising</option>
+            <option value="relevance">Relevance</option>
+            <option value="comments">Comments</option>
+          </Select>
+          <Box
+            as="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              setSearch(searchInput);
+            }}
+            display="flex"
+            alignItems="center"
+            gap={1}
+          >
+            <input
+              style={{
+                fontFamily: "'Press Start 2P', cursive",
+                fontSize: "0.8em",
+                padding: "0.3em 0.6em",
+                border: "2px solid",
+                borderRadius: "4px",
+                background: "inherit",
+                color: "inherit",
+                outline: "none",
+              }}
+              type="text"
+              placeholder="Buscar..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            <Button type="submit" size="sm" border="2px solid">
+              Buscar
+            </Button>
+          </Box>
+          <Button onClick={toggleColorMode}>
+            {colorMode === "light" ? <FaMoon /> : <FaSun />}
+          </Button>
+        </Box>
       </Box>
 
       <InfiniteScroll
@@ -216,13 +276,16 @@ function AppContent() {
           <Box
             p={4}
             border="4px solid"
-            bg={colorMode === "light" ? "#DFD0B8" : "#222831"}
+            bg={bg}
+            color={color}
             maxW="90vw"
             maxH="90vh"
             display="flex"
             flexDirection="column"
             alignItems="center"
             position="relative"
+            transition="background 0.3s, color 0.3s"
+            onClick={(e) => e.stopPropagation()}
           >
             <Image
               src={modalImage.fullUrl}
@@ -235,13 +298,7 @@ function AppContent() {
             <Text fontSize="sm" mb={2} textAlign="center">
               {modalImage.title}
             </Text>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                setModalImage(null);
-              }}
-              mt={2}
-            >
+            <Button onClick={() => setModalImage(null)} mt={2}>
               Cerrar
             </Button>
           </Box>
