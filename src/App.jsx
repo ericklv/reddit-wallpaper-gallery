@@ -32,16 +32,16 @@ const theme = extendTheme({
         width: "100vw",
       },
       body: {
-        fontFamily: "'Press Start 2P', cursive",
+        fontFamily: "'Press Start 2P'",
       },
       "h1, h2, h3, h4, h5, h6": {
-        fontFamily: "'Press Start 2P', cursive",
+        fontFamily: "'Press Start 2P'",
       },
     },
   },
   fonts: {
-    heading: "'Press Start 2P', cursive",
-    body: "'Press Start 2P', cursive",
+    heading: "'Press Start 2P'",
+    body: "'Press Start 2P'",
   },
 });
 
@@ -176,8 +176,6 @@ function AppContent() {
             <option value="new">New</option>
             <option value="top">Top</option>
             <option value="rising">Rising</option>
-            <option value="relevance">Relevance</option>
-            <option value="comments">Comments</option>
           </Select>
           <Box
             as="form"
@@ -191,7 +189,7 @@ function AppContent() {
           >
             <input
               style={{
-                fontFamily: "'Press Start 2P', cursive",
+                fontFamily: "'Press Start 2P'",
                 fontSize: "0.8em",
                 padding: "0.3em 0.6em",
                 border: "2px solid",
@@ -277,7 +275,7 @@ function AppContent() {
               </Box>
               <Text
                 mt={2}
-                fontSize="xs"
+                fontSize="2xs"
                 noOfLines={2}
                 textAlign="center"
                 w="full"
