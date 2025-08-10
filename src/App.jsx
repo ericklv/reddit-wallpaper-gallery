@@ -347,6 +347,8 @@ function AppContent() {
                 target="_blank"
                 rel="noopener noreferrer"
                 border="2px solid"
+                bg={bg}
+                color={color}
               >
                 Descargar
               </Button>
@@ -355,6 +357,7 @@ function AppContent() {
                 border="2px solid"
                 bg="red.500"
                 color="white"
+                borderColor={color}
                 _hover={{ bg: "red.600" }}
               >
                 Cerrar
