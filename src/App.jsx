@@ -154,6 +154,8 @@ function AppContent() {
             onChange={(e) => setSubreddit(e.target.value)}
             width="auto"
             border="2px solid"
+            minW="120px"
+            sx={{ height: "32px" }}
           >
             {SUBREDDITS.map((subreddit) => (
               <option key={subreddit} value={subreddit}>
@@ -167,6 +169,8 @@ function AppContent() {
             onChange={(e) => setFilter(e.target.value)}
             width="auto"
             border="2px solid"
+            minW="100px"
+            sx={{ height: "32px" }}
           >
             <option value="hot">Hot</option>
             <option value="new">New</option>
@@ -195,17 +199,29 @@ function AppContent() {
                 background: "inherit",
                 color: "inherit",
                 outline: "none",
+                height: "32px",
+                boxSizing: "border-box",
               }}
               type="text"
               placeholder="Buscar..."
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
-            <Button type="submit" size="sm" border="2px solid">
+            <Button
+              type="submit"
+              size="sm"
+              border="2px solid"
+              sx={{ height: "32px" }}
+            >
               Buscar
             </Button>
           </Box>
-          <Button onClick={toggleColorMode}>
+          <Button
+            onClick={toggleColorMode}
+            size="sm"
+            border="2px solid"
+            sx={{ height: "32px" }}
+          >
             {colorMode === "light" ? <FaMoon /> : <FaSun />}
           </Button>
         </Box>
@@ -298,9 +314,34 @@ function AppContent() {
             <Text fontSize="sm" mb={2} textAlign="center">
               {modalImage.title}
             </Text>
-            <Button onClick={() => setModalImage(null)} mt={2}>
-              Cerrar
-            </Button>
+            <Box
+              display="flex"
+              gap={2}
+              mt={2}
+              mb={2}
+              width="100%"
+              justifyContent="center"
+            >
+              <Button
+                as="a"
+                href={modalImage.fullUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                border="2px solid"
+              >
+                Descargar
+              </Button>
+              <Button
+                onClick={() => setModalImage(null)}
+                border="2px solid"
+                bg="red.500"
+                color="white"
+                _hover={{ bg: "red.600" }}
+              >
+                Cerrar
+              </Button>
+            </Box>
           </Box>
         </Box>
       )}
