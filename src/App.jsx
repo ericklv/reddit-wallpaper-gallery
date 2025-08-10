@@ -209,6 +209,9 @@ function AppContent() {
               type="submit"
               size="sm"
               border="2px solid"
+              borderColor={color}
+              color={color}
+              bg={bg}
               sx={{ height: "32px" }}
             >
               Buscar
@@ -218,6 +221,9 @@ function AppContent() {
             onClick={toggleColorMode}
             size="sm"
             border="2px solid"
+            borderColor={color}
+            color={color}
+            bg={bg}
             sx={{ height: "32px" }}
           >
             {colorMode === "light" ? <FaMoon /> : <FaSun />}
