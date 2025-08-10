@@ -46,8 +46,11 @@ const theme = extendTheme({
 // Constantes globales
 const SUBREDDITS = [
   "Amoledbackgrounds",
+  "WidescreenWallpaper",
+  "MobileWallpaper",
   "wallpapers",
-  "topwalls",
+  "wallpaper",
+  "MinimalWallpaper",
   "AestheticWallpapers",
   "WQHD_Wallpaper",
 ];
