@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Global } from "@emotion/react";
 import {
@@ -11,11 +11,9 @@ import {
   Text,
   useColorMode,
   extendTheme,
-  Fade,
 } from "@chakra-ui/react";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { useColorModeValue } from "@chakra-ui/react";
-import { useRef } from "react";
 
 const theme = extendTheme({
   colors: {
@@ -44,6 +42,16 @@ const theme = extendTheme({
     body: "'Press Start 2P'",
   },
 });
+
+// Constantes globales
+const SUBREDDITS = [
+  "Amoledbackgrounds",
+  "wallpapers",
+  "topwalls",
+  "AestheticWallpapers",
+  "WQHD_Wallpaper",
+];
+const CARD_SIZE = 145;
 
 function AppContent() {
   const [wallpapers, setWallpapers] = useState([]);
@@ -95,13 +103,6 @@ function AppContent() {
     );
     setAfter(data.data.after);
   };
-
-  const SUBREDDITS = [
-    "wallpapers",
-    "topwalls",
-    "AestheticWallpapers",
-    "WQHD_Wallpaper",
-  ];
 
   // Definir colores según el tema
   const bg = useColorModeValue("brand.lightBg", "brand.darkBg");
@@ -309,7 +310,7 @@ function AppContent() {
         <Box
           ref={gridRef}
           display="grid"
-          gridTemplateColumns="repeat(auto-fill, minmax(145px, 1fr))"
+          gridTemplateColumns={`repeat(auto-fill, minmax(${CARD_SIZE}px, 1fr))`}
           gap={4}
           p={4}
         >
@@ -327,14 +328,13 @@ function AppContent() {
               color={color}
               transition="transform 0.3s"
               _hover={{
-                transform: "scale(1.2)",
+                transform: "scale(1.3)",
               }}
             >
               <Box
                 overflow="hidden"
-                borderRadius="md"
-                width="140px"
-                height="140px"
+                width={`${CARD_SIZE}px`}
+                height={`${CARD_SIZE}px`}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -342,7 +342,7 @@ function AppContent() {
                 <Image
                   src={w.thumbnail}
                   alt={w.title}
-                  boxSize="125px"
+                  boxSize={`${CARD_SIZE - 8}px`}
                   objectFit="cover"
                   borderRadius="none"
                   mb={2}
@@ -368,7 +368,6 @@ function AppContent() {
           left={0}
           w="100vw"
           h="100vh"
-          bg={useColorModeValue("rgba(34,40,49,0.7)", "rgba(223,208,184,0.7)")}
           display="flex"
           alignItems="center"
           justifyContent="center"
